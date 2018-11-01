@@ -14,7 +14,7 @@ const reducer =(state=initialState,action)=>{
          case actionTypes.LOGIN_SUCCESS:
          return {...state,loginStatus: true,userToken:action.payload}
          case actionTypes.LOGOUT:
-         return {...state,loginStatus: false}
+         return {...state,loginStatus: false,loginFailed:false, serviceFailed:false}
          case 'IFGARRAY':
          return {...state,results: state.results.concat(action.payload)}
          case actionTypes.AUTH_FAIL:

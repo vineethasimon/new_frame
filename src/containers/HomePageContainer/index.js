@@ -30,7 +30,6 @@ const mapDispatchToProps= dispatch =>{
 
     return{
         OnLogin:()=>{ dispatch({type:actionTypes.LOGIN});
-        // dispatch(push('/home_page'))
     },
         OnLogOut:()=>{ dispatch({type:actionTypes.LOGOUT});
                     //    dispatch(push('/'));

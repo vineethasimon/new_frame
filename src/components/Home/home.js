@@ -6,13 +6,11 @@ class Home extends Component {
 
 
 backAction=()=>{
- 
   this.props.backAction();
 }
     
     
     render(){
-
         //inline style
         const style = {
             backgroundColor: 'yellow',
@@ -27,16 +25,12 @@ backAction=()=>{
 
         };
 
-
-
      return (
-      
         <div className="homeBody">
           <div className="container">
           Welcome Home!!!!!<br/>
           <Button id="backButton" className="backButton" onClick={this.backAction}>BACK</Button>
         </div>
-
       </div>
     );
     }

@@ -23,24 +23,15 @@ class App extends Component {
     return (
       <BrowserRouter  history = {history}>
       <div className="App">
-        {/*<header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>*/}
-        <ErrorBoundary>
        
-        
-        {/*<Login/>*/}
+        <ErrorBoundary>
+        <div className="loadingIndicatorMain" id="loadingIndicatorMain">
+          <div className="spinner">
+            <div className="bounce1"></div>
+            <div className="bounce2"></div>
+            <div className="bounce3"></div>
+          </div>
+          </div>
         <Route exact path="/" component={LoginPage} />
         <Route path="/home_page" exact component={HomePage} />
         

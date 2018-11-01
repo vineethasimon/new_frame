@@ -15,18 +15,35 @@ class Login extends Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
+  componentDidMount() {
+    let that = this;
+    document.getElementById('userId').onkeydown = function (e) {
+      if (e.keyCode == 13) {
+        that.loginAction();
+      }
+      // else
+      // that.setState({errorMsg: ""})
+    };
+    document.getElementById('passWord').onkeydown = function (e) {
+      if (e.keyCode == 13) {
+        that.loginAction();
+      }
+      // else
+      // that.setState({errorMsg: ""})
+    };
+  }
+
    componentWillReceiveProps(newProps) {
-     console.log(newProps)
      if(newProps.loginFailed){
          this.setState({ unauth: true });
+           document.getElementById('loadingIndicatorMain').style.display = 'none';
             }
      if(newProps.serviceFailed)
-     
         this.setState({ errorMsg: "Network Error.Please Try again after some time!!" });
+          document.getElementById('loadingIndicatorMain').style.display = 'none';
     }
 
   getErrorMessage = () => {
-    // this.setState({ loginFail: false });
     let userName = document.getElementById('userId').value;
     let passWord = document.getElementById('passWord').value;
     let errorMsg = '';
@@ -44,19 +61,19 @@ class Login extends Component {
   }
     
     loginAction=()=>{
-//   console.log("login action-props",this.props);
+       this.setState({errorMsg: ""})
     let userName = document.getElementById('userId').value;
     let passWord = document.getElementById('passWord').value;
     let errorMsg = '';
     errorMsg = this.getErrorMessage();
     this.setState({ errorMsg: errorMsg });
     if (errorMsg.length === 0) {
+      document.getElementById('loadingIndicatorMain').style.display = 'flex';
       this.props.login(userName,passWord);
     }
     
 }
     backAction = () => {
-        //   console.log("login action-props",this.props);
         this.props.back();
     }
     
@@ -110,7 +127,6 @@ class Login extends Component {
                   </FormGroup>
                   <div >
                     <Button id="loginButton" className="loginButton" onClick={this.loginAction}>LOGIN</Button>
-                     {/*<Button id="loginBackButton" className="loginButton" onClick={this.backAction}>BACK</Button>*/}
                   </div>
                 </Form>
               </div>

@@ -20,20 +20,12 @@ const SESSION_TIME = 1800; //30min
 export function* login(action){ //generator
  //each step with yield
 
- console.log("login Saga");
-
   const requestURL = `${BASE_LOGIN_URL}authenticate`;
-//   const userObj = {
-//     password: action.payload.password,
-//     username: action.payload.userId,
-//     expirationTime: SESSION_TIME,
-//   };
     const userObj = {
     password:action.payload.password,
     username:action.payload.username,
     expirationTime: SESSION_TIME,
   };
-  // const { history } = action.payload.history;
   const requestAttrs = {
     method: 'POST',
     headers: {
@@ -47,9 +39,11 @@ export function* login(action){ //generator
     // Call our request helper (see 'utils/request')
     const loginResponse = yield call(request, requestURL, requestAttrs);
     yield put(actions.loginSuccess((loginResponse.token)));
-     history.push('/home_page');
-     window.location.reload();
-
+    history.push('/home_page');
+    window.location.reload();
+    if (document.getElementById('loadingIndicatorMain')) {
+      document.getElementById('loadingIndicatorMain').style.display = 'none';
+    }
   } catch (err) {
     console.log('error in login');
     const test = JSON.stringify(err);
@@ -65,9 +59,7 @@ export function* login(action){ //generator
       document.getElementById('loadingIndicatorMain').style.display = 'none';
     }
 
-    // console.log(err + ' login call failed');
-    // yield put(requestLoginFailed('failed'));
-    // yield put(serviceCallFailed('failed'));
+    
   }
     
 }

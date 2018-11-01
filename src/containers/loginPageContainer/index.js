@@ -27,28 +27,22 @@ export class LoginPage extends Component {
   }
 
     componentWillReceiveProps(newProps) {
-          console.log("logincontainerwillreceieveprops new-props", newProps);
-
            if (newProps.ctr.loginFailed) {
                  this.setState({ loginFailed: true });
-                console.log("login failed");
             }
              if (newProps.ctr.serviceFailed) {
                  this.setState({ serviceFailed: true });
-                console.log("service failed");
                 }
         
        }
 
         loginAction = (username,password) => {
-        this.props.OnLogin(username,password);
-        // this.props.history.push('/home_page');
+        this.props.OnLogin(username,password);        ;
     }
 
        backAction = () => {
            this.props.OnLogOut(); 
            this.props.history.push('/home');
-
        }
 
     render(){
