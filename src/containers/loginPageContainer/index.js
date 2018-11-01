@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
 import Login from '../../components/Login/login';
 import{connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../store/actions/auth';
 // import { push } from 'react-router-redux'; 
 
 
@@ -19,16 +21,29 @@ import * as actionTypes from '../../store/actions';
         };
 
 export class LoginPage extends Component { 
+    state = {
+    loginFailed:false,
+    serviceFailed:false
+  }
 
     componentWillReceiveProps(newProps) {
-          console.log("logincomponentwillreceieveprops new-props", newProps);
+          console.log("logincontainerwillreceieveprops new-props", newProps);
 
-    }
-
-       loginAction = () => {
-           this.props.OnLogin(); 
-           this.props.history.push('/home_page');
+           if (newProps.ctr.loginFailed) {
+                 this.setState({ loginFailed: true });
+                console.log("login failed");
+            }
+             if (newProps.ctr.serviceFailed) {
+                 this.setState({ serviceFailed: true });
+                console.log("service failed");
+                }
+        
        }
+
+        loginAction = (username,password) => {
+        this.props.OnLogin(username,password);
+        // this.props.history.push('/home_page');
+    }
 
        backAction = () => {
            this.props.OnLogOut(); 
@@ -38,7 +53,7 @@ export class LoginPage extends Component {
 
     render(){
         return(
-        <div><Login login={this.loginAction} back={this.backAction}/>
+        <div><Login login={this.loginAction} back={this.backAction } loginFailed={this.state.loginFailed}serviceFailed={this.state.serviceFailed}/>
         <br/>
         <div className = {style}>{this.props.ctr.loginStatus}</div></div>
         );
@@ -57,12 +72,12 @@ const mapDispatchToProps= dispatch =>{
 
 
     return{
-        OnLogin:()=>{ dispatch({type:actionTypes.LOGIN});
+        OnLogin:(username,password)=>{ dispatch(actions.auth(username,password));
                     //   dispatch(push('/'));
                     } ,
         OnLogOut:()=> dispatch({type:actionTypes.LOGOUT}),
     }
 
 }
-export default connect(mapStateToProps,mapDispatchToProps)(LoginPage);
+export default (connect(mapStateToProps,mapDispatchToProps)(LoginPage));
 // export default LoginPage;

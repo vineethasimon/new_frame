@@ -1,11 +1,73 @@
 //any side effects or async calls
 
 import {put} from 'redux-saga/effects';
-import * as actionTypes from '../../store/actions';
+import request from '../../utils/request';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../store/actions/auth.js';
+import { call } from 'redux-saga/effects';
+// import { browserHistory } from 'react-router'
+// import { browserHistory } from 'react-router-dom';
+import history from '../../history';
 
-function* login(action){ //generator
- 
+// import { createBrowserHistory } from 'history'
 
- console.log("login Saga")
+// import {BrowserRouter} from 'react-router-dom';
+// import { push } from 'react-router-redux';
+
+const BASE_LOGIN_URL = 'https://merch.aws.na.sysco.net/securityservice/login/';
+const SESSION_TIME = 1800; //30min
+
+export function* login(action){ //generator
+ //each step with yield
+
+ console.log("login Saga");
+
+  const requestURL = `${BASE_LOGIN_URL}authenticate`;
+//   const userObj = {
+//     password: action.payload.password,
+//     username: action.payload.userId,
+//     expirationTime: SESSION_TIME,
+//   };
+    const userObj = {
+    password:action.payload.password,
+    username:action.payload.username,
+    expirationTime: SESSION_TIME,
+  };
+  // const { history } = action.payload.history;
+  const requestAttrs = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userObj),
+  };
+
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const loginResponse = yield call(request, requestURL, requestAttrs);
+    yield put(actions.loginSuccess((loginResponse.token)));
+     history.push('/home_page');
+     window.location.reload();
+
+  } catch (err) {
+    console.log('error in login');
+    const test = JSON.stringify(err);
+    if (test === '{}') {
+      yield put(actions.serviceCallFailed('failed'));
+      console.log(`Problem with network ${test}`);
+    } else {
+      console.log(`Wrong credentials ${test}`);
+      yield put(actions.loginFailed('failed'));
+    }
+
+    if (document.getElementById('loadingIndicatorMain')) {
+      document.getElementById('loadingIndicatorMain').style.display = 'none';
+    }
+
+    // console.log(err + ' login call failed');
+    // yield put(requestLoginFailed('failed'));
+    // yield put(serviceCallFailed('failed'));
+  }
     
 }

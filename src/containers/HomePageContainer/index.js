@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Home from '../../components/Home/home';
 import{connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../store/actions/actionTypes';
 // import { push } from 'react-router-redux'; 
 
 export class HomePage extends Component { 

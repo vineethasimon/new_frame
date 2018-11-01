@@ -57,6 +57,15 @@
     border-radius: 10px;
     
 }
+.errorMsg {
+    color: #ff0000;
+    padding: 5px;
+    text-align: left;
+    border: 1px solid #ff0000;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
 
 .username,
 .password {

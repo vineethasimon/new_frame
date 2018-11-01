@@ -7,7 +7,8 @@ import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import { Route } from 'react-router-dom';
 import LoginPage from './loginPageContainer'
 import HomePage from './HomePageContainer'
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter} from 'react-router-dom';
+import history from '../history.js';
 class App extends Component {
 
 
@@ -20,7 +21,7 @@ class App extends Component {
   }
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter  history = {history}>
       <div className="App">
         {/*<header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
